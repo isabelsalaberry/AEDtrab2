@@ -1,16 +1,65 @@
 package lists;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class LinkedList<E> implements List<E> {
+
+    protected class Node<E>{
+        protected E data = null;
+        protected Node<E> next = null;
+        protected Node<E> previous = null;
+
+        public Node (E d, Node<E> n, Node<E> p){
+            this.data = d;
+            this.next = n;
+            this.previous = p;
+        }
+
+        public E getData (){
+            return this.data;
+        }
+
+        public void setData (E e){
+            this.data = e;
+        }
+
+        public Node<E> getNext () {
+            return this.next;
+        }
+
+        public void setNext (Node<E> n) {
+            this.next = n;
+        }
+
+        public Node<E> getPrevious () {
+            return this.previous;
+        }
+
+        public void setPrevious (Node<E> p) {
+            this.previous = p;
+        }
+
+    }
+
+    protected Node<E> header;
+    protected Node<E> trailer;
+    protected int size;
+
+    public LinkedList(){
+        this.header = new Node<>(null, null, null);
+        this.trailer = new Node<>(null, null, header);
+        this.header.setNext(this.trailer);
+        this.size = 0;
+    }
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     @Override
@@ -60,11 +109,32 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public LinkedList<E> clone() {
-        return null;
+        LinkedList<E> copy = new LinkedList<>(); //cria a lista
+
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()){
+            E data = it.next();
+            copy.add(data); // copia os dados na ordem da lista atual
+        }
+
+        return null; // retorna a lista
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return null;
+    public Iterator<E> iterator() { return new LinkedList.DLLIterator(); }
+
+    protected class DLLIterator implements Iterator<E>{
+        protected Node<E> cursor = header;
+
+        public boolean hasNext() {
+            return cursor != trailer;
+        }
+
+        public E next(){
+            if (cursor == trailer) throw new NoSuchElementException("Sem próximo elemento");
+            Node<E> current = cursor;
+            cursor=cursor.getNext();
+            return current.getData();
+        }
     }
 }
