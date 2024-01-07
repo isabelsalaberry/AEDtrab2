@@ -1,4 +1,4 @@
-package lists;
+package trab2.lists;
 
 /**
  * Interface para coleções com o comportameto típico de uma lista.

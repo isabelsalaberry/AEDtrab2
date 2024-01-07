@@ -1,14 +1,15 @@
-package lists;
+package trab2.lists;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class LinkedList<E> implements List<E> {
+public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
 
     protected class Node<E>{
         protected E data = null;
         protected Node<E> next = null;
         protected Node<E> previous = null;
+        
 
         public Node (E d, Node<E> n, Node<E> p){
             this.data = d;
@@ -45,14 +46,17 @@ public class LinkedList<E> implements List<E> {
     protected Node<E> header;
     protected Node<E> trailer;
     protected int size;
-
+  
+    
     public LinkedList(){
         this.header = new Node<>(null, null, null);
         this.trailer = new Node<>(null, null, header);
         this.header.setNext(this.trailer);
         this.size = 0;
     }
-
+    
+    
+    
     public LinkedList(Node<E> header, Node<E> trailer, int size){
         this.header = header;
         this.trailer = trailer;
@@ -71,28 +75,34 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public void add(E e) {
+       if (isEmpty())
+               addBetween(e, header,trailer);
+       else
        addBetween(e,trailer.getPrevious(),trailer);
     }
 
     @Override
-    public boolean add(int i, E e) {
-        int j=-1;
-        Iterator<E> it = this.iterator();
-        while (it.hasNext()){
-            j++;
-            if(j==i)
-               addBetween(e,it.previouscursor() , it.cursor);//////////
-            return true;
+    public boolean add(int i, E e) { 
+        //versão percorrendo os nós
+        if (i < 0 || i > size) 
+            throw new IndexOutOfBoundsException("Posição inválida");
+        
+        Node<E> current = header.getNext();
+        for (int j = 0; j < i; j++) {
+        current = current.getNext();
         }
-        return false;
+
+        addBetween(e, current.getPrevious(), current);
+        return true;
     }
     
-    protected void addBetween(E e, Node<E> predecessor, Node<E> successor){ //adicionei para os métodos add - conferir
-    Node<E>newest=new Node<>(e,predecessor,successor);
-    predecessor.setNext(newest);
-    successor.setPrevious(newest);
-    size++;
+    protected void addBetween(E e, Node<E> predecessor, Node<E> successor) {
+        Node<E> newest = new Node<>(e, predecessor, successor);
+        predecessor.setNext(newest);
+        successor.setPrevious(newest);
+        size++;
     }
+
 
     @Override
     public E set(int i, E e) {
@@ -142,6 +152,22 @@ public class LinkedList<E> implements List<E> {
         return null; // retorna a lista
     }
 
+        
+    //método pra teste na main
+    public void print() {
+        Node<E> current = header.getNext();
+        int i=0;
+        while((current!=null&&i<size())) {
+            System.out.print(current.getData() + "\n");
+            current = current.getNext();
+            i++;
+        }
+        System.out.println();
+    }
+    
+    
+    
+    
     @Override
     public Iterator<E> iterator() { return new LinkedList.DLLIterator(); }
 
@@ -159,4 +185,7 @@ public class LinkedList<E> implements List<E> {
             return current.getData();
         }
     }
+    
+    
+    
 }
