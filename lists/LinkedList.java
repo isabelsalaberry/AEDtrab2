@@ -52,6 +52,13 @@ public class LinkedList<E> implements List<E> {
         this.header.setNext(this.trailer);
         this.size = 0;
     }
+
+    public LinkedList(Node<E> header, Node<E> trailer, int size){
+        this.header = header;
+        this.trailer = trailer;
+        this.size = size;
+    }
+
     @Override
     public int size() {
         return this.size;
