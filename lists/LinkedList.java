@@ -71,12 +71,27 @@ public class LinkedList<E> implements List<E> {
 
     @Override
     public void add(E e) {
-
+       addBetween(e,trailer.getPrevious(),trailer);
     }
 
     @Override
     public boolean add(int i, E e) {
+        int j=-1;
+        Iterator<E> it = this.iterator();
+        while (it.hasNext()){
+            j++;
+            if(j==i)
+               addBetween(e,it.previouscursor() , it.cursor);//////////
+            return true;
+        }
         return false;
+    }
+    
+    protected void addBetween(E e, Node<E> predecessor, Node<E> successor){ //adicionei para os métodos add - conferir
+    Node<E>newest=new Node<>(e,predecessor,successor);
+    predecessor.setNext(newest);
+    successor.setPrevious(newest);
+    size++;
     }
 
     @Override
