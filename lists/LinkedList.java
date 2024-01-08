@@ -82,8 +82,8 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
     }
 
     @Override
-    public boolean add(int i, E e) {                        //algo não funciona e eu real nao sei dizer o que é
-        if (i < 0 || i > size){
+    public boolean add(int i, E e) {                        //algo não funciona bem e eu real nao sei dizer o que é
+        if (i < 0 || i > size){                             //acredito que essa forma de percorrer a lista nao ta legal
             return false;
         }
         Node<E> current = header.getNext();
@@ -97,6 +97,29 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
             }
         }
         return false;
+
+
+        /*   VERSAO COM ITERADOR
+                if (i < 0 || i > size) {
+            return false;
+        }
+
+        Iterator<E> it = this.iterator();
+       // Node<E> predecessor = header;
+
+        for (int j = 0; j <= i && it.hasNext(); j++) {
+            E data = it.next();
+
+            if (j == i) {
+                addBetween(e, it.getPrevious(), it);                //conseguir uma forma de determinar o anterior com it
+                return true;
+            }
+
+        }
+
+        return false;
+        */
+
     }
 
     protected void addBetween(E e, Node<E> predecessor, Node<E> successor) {
@@ -113,7 +136,7 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
             return null;
         else {
 
-        Node<E> current = header.getNext();
+        Node<E> current = header.getNext();                         //verificar a necessidade de iterator
         for (int j = 0; j <= i; j++) {
             current = current.getNext();
 
@@ -142,7 +165,7 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
             return null;
         else {
 
-            Node<E> current = header.getNext();
+            Node<E> current = header.getNext();             //verificar a necessidade de iterador
             for (int j = 0; j <= i; j++) {
                 current = current.getNext();
                 if (j == i) {
@@ -167,7 +190,7 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
         else {
             Node<E> current = header;
 
-            for (int j = 0; j <= i; j++) {
+            for (int j = 0; j <= i; j++) {                 //verificar a necessidade de iterador
                 current = current.getNext();
 
                 if (j == i) {

@@ -22,10 +22,10 @@ public class Main {
         dedos.print();
 
         //inserindo elem. na posicao determinada
-        dedos.add(1,"Seu Vizinho");    //CORRIGIR
+        dedos.add(1,"Seu Vizinho");                  //por algum motivo nao funciona, talvez tenha relaçao com o metodo de percorrer a lista
 
         //excluindo um elemento
-        dedos.remove(2);
+        dedos.remove(2);                                 //por algum motivo nao funciona, talvez tenha relaçao com o metodo de percorrer a lista
 
         //prints
         System.out.println("\nLista após a inserção:");
