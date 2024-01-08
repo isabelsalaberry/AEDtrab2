@@ -82,20 +82,23 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
     }
 
     @Override
-    public boolean add(int i, E e) { 
-        //versão percorrendo os nós
-        if (i < 0 || i > size) 
-            throw new IndexOutOfBoundsException("Posição inválida");
-        
-        Node<E> current = header.getNext();
-        for (int j = 0; j < i; j++) {
-        current = current.getNext();
+    public boolean add(int i, E e) {                        //algo não funciona e eu real nao sei dizer o que é
+        if (i < 0 || i > size){
+            return false;
         }
+        Node<E> current = header.getNext();
+        for (int j = 0; j <= i; j++) {
+            current = current.getNext();
 
-        addBetween(e, current.getPrevious(), current);
-        return true;
+            if (j == i) {
+                addBetween(e, current.getPrevious(), current);
+                return true;
+
+            }
+        }
+        return false;
     }
-    
+
     protected void addBetween(E e, Node<E> predecessor, Node<E> successor) {
         Node<E> newest = new Node<>(e, predecessor, successor);
         predecessor.setNext(newest);
@@ -106,8 +109,22 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
 
     @Override
     public E set(int i, E e) {
-        return null;
+        if (i < 0 || i > size)
+            return null;
+        else {
+
+        Node<E> current = header.getNext();
+        for (int j = 0; j <= i; j++) {
+            current = current.getNext();
+
+            if (j == i) {
+                addBetween(e, current.getPrevious(), current.getNext());
+            }
+        }
+        return e;
+        }
     }
+
 
     @Override
     public void addAll(List<E> outra) {
@@ -121,6 +138,18 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
 
     @Override
     public E get(int i) {
+        if (i < 0 || i > size)
+            return null;
+        else {
+
+            Node<E> current = header.getNext();
+            for (int j = 0; j <= i; j++) {
+                current = current.getNext();
+                if (j == i) {
+                    return current.getData();                //duvida!!!! o getData() retorna o elemento apontado pelo it?
+                }
+            }
+        }
         return null;
     }
 
@@ -131,7 +160,35 @@ public class LinkedList<E> extends DoublyLinkedList<E> implements List<E> {
 
     @Override
     public E remove(int i) {
-        return null;
+        E morto = null;
+
+        if (i < 0 || i >= size)
+            return null;
+        else {
+            Node<E> current = header;
+
+            for (int j = 0; j <= i; j++) {
+                current = current.getNext();
+
+                if (j == i) {
+                    morto = current.getData();
+
+                    Node<E> predecessor = current.getPrevious();
+                    Node<E> sucessor = current.getNext();
+
+                    predecessor.setNext(sucessor);
+                    sucessor.setPrevious(predecessor);
+
+                    if (i == 0) {
+                        // Se i for 0 header aopnta pro sucessor
+                        header.setNext(sucessor);
+                    }
+
+                    size--;
+                }
+            }
+        }
+        return morto;
     }
 
     @Override

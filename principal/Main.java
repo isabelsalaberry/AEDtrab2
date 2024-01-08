@@ -9,10 +9,11 @@ public class Main {
 
         //insercao com 1 parametro
         dedos.add("Mindinho");
+
         dedos.add("Pai de Todos");
         dedos.add("Furabolo");
         dedos.add("Mata Piolho");
-        dedos.add("Fumiguinha?");
+        dedos.add("e a Fumiguinha?");
 
 
 
@@ -21,7 +22,10 @@ public class Main {
         dedos.print();
 
         //inserindo elem. na posicao determinada
-        dedos.add(1, "Seu Vizinho");
+        dedos.add(1,"Seu Vizinho");    //CORRIGIR
+
+        //excluindo um elemento
+        dedos.remove(2);
 
         //prints
         System.out.println("\nLista após a inserção:");
